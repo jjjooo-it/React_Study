@@ -1,10 +1,13 @@
 import './Result.css';
-import React from 'react';
+import {React,useEffect} from 'react';
 import {useNavigate,useLocation} from 'react-router-dom';
 
 function Result(){
     const navigate = useNavigate();
     const location = useLocation();
+    useEffect(() => {
+        console.log(location);
+      }, [ location ])
     const userMbti = location.state.mbti;
     const userDetail = location.state.detail;
 

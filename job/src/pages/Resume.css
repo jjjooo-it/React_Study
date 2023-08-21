@@ -1,0 +1,75 @@
+.headerRe {
+    line-height: 30px;
+    padding: 0px 120px 30px 0px; /* Remove right padding and update left padding to 0px */
+    display: flex;
+    font-size: 10px;
+    flex-direction: row;
+    align-items: center; /* Align items vertically in the header */
+    background-color: rgb(238, 127, 53);
+  }
+  
+  .headerRe a {
+    font-size: 14px;
+    text-decoration: none;
+    color: white;
+    margin-left: auto; /* Move the JOBLION홈 link to the right */
+  }
+  
+  .headerLeft {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+  }
+  
+  .headerLeft p {
+    margin-right: 10px;
+    font-size: 25px;
+    color: white;
+  }
+  
+  /* Rest of your existing styles */
+  
+.body2{
+    margin: 0% 20% 0% 20%;
+}
+.body2 .resumeBody{
+    width: 100%;
+    height:700px;
+    display:grid; 
+    grid-template-rows: 1fr 5fr 0.1fr 0.6fr;
+}
+.resumeBody .resumeTit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.resumeTit input{
+    width: 700px;
+    height: 50px;
+}
+.resumeBody .resumeCon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.resumeCon textarea{
+    width: 700px;
+    height: 500px;
+}
+.counter{
+    display: flex;
+    margin-left: 15%;
+}
+.resumeBody .resumedd{
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+.resumedd input{
+    width: 700px;
+    height: 50px;
+    background-color: rgb(238, 127, 53);
+    color: rgb(255, 255, 255);
+    border-color: white;
+}
+

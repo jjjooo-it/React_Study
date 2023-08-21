@@ -4,8 +4,9 @@
     display: flex;
     justify-content: center;
 }
-.result{
-    
+.detailMbti>p{
+    text-align: center;
+    line-height: 300px;
 }
 .detailMbti{
     width: 500px;

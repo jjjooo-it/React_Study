@@ -1,0 +1,78 @@
+.headerSignup {
+    line-height: 30px;
+    padding: 0px 120px 30px 0px; /* Remove right padding and update left padding to 0px */
+    display: flex;
+    font-size: 10px;
+    flex-direction: row;
+    align-items: center; /* Align items vertically in the header */
+    background-color: rgb(238, 127, 53);
+  }
+  
+  .headerSignup a {
+    font-size: 14px;
+    text-decoration: none;
+    color: white;
+    margin-left: auto; /* Move the JOBLION홈 link to the right */
+  }
+  
+  .headerleft {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+  }
+  
+  .headerleft p {
+    margin-right: 10px;
+    font-size: 25px;
+    color: white;
+  }
+
+.body{
+    width: 100%;
+    height:700px;
+    display:grid; 
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.6fr 3fr;
+}
+.comName{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.comName p {
+    font-size: 40px;
+    font-weight: bold; 
+  }
+.login{
+    margin: 0px 150px 0px 150px;
+}
+.signupContainer {
+    height: 550px;
+    margin: 0px 250px 20px 250px;
+    border: 2px solid rgb(238, 127, 53);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.signupContainer .pageName{
+    font-size: 35px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-bottom: 5px;
+    margin-top: 0px;
+}
+.inputCom input{
+    width: 450px;
+    height: 50px;
+}
+.signupContainer .signupBTN{
+    width: 458px;
+    height: 50px;
+    background-color: rgb(238, 127, 53);
+    color: rgb(255, 255, 255);
+    border-color: #ffffff;
+}
+  

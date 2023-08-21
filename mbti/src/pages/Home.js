@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import './Home.css';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
@@ -15,18 +15,16 @@ function Home(){
     ]);
     const [mean] = useState(['에너지 방향','인식 방식','판단', '생활 양식']);
     const [userDetail, setDetail] = useState('');
-
-    const getDetail =()=>{
-        axios.get(`http://localhost:8080/mbti/${userMbti[0]}${userMbti[1]}${userMbti[2]}${userMbti[3]}`)
-        .then(res=>{
-          const copy = [...userDetail];
-          copy = res.data.info;
-          setDetail(copy);
-        }) 
-          .catch(e=>{
-            alert("실패");
-          })      
-    }
+   
+    useEffect(() => {
+      axios.get(`http://49.247.33.67:8080/mbti/${userMbti[0]}${userMbti[1]}${userMbti[2]}${userMbti[3]}`)
+      .then(res=>{
+        setDetail(res.data.info);
+        console.log(userDetail);
+      }) 
+      .catch(e=>{
+      })    
+    })   
 
     return (
       <div className="Home">
@@ -58,12 +56,9 @@ function Home(){
               </div>
               )
             })}
-
         </div>
-
         <div className="completeBtn">
               <input type='submit' value={"확인"} onClick={()=>{
-                getDetail();
                 navigate('/result',{state:{mbti:userMbti, detail:userDetail}});}}/>
            </div>
 

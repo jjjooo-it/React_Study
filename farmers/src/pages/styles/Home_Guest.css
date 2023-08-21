@@ -1,0 +1,37 @@
+.profile-gs{
+    width: 230px;
+    height : 250px;
+    background-color: rgb(232, 241, 232);
+    border: none;
+    border-radius: 10px;
+    margin-right: 30px;
+    text-align: center;
+}
+.profile-gs>button{
+    width: 60%;
+    height: 33px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgb(54, 131, 24);
+    color: white;
+    margin-bottom: 10px;
+}
+.profile-gs>button:hover{
+    background-color: lightgray;
+    color: black;
+}
+/**************************/
+.level-gs{
+    width: 230px;
+    height : 200px;
+    position: fixed;
+    right: 8%; 
+    background-color: rgb(252, 248, 248);
+    border: none;
+    border-radius: 10px;
+    margin-left: 20px;
+    text-align: center;
+}
+.level-gs>p{
+    font-size: 15px;
+}
