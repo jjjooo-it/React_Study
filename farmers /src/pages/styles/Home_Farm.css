@@ -78,18 +78,6 @@
     display: flex;
     flex-direction: column;
 }
-.propro{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-.propro>button{
-    margin-top: 20px;
-    width: 220px;
-    margin-right: 25px;
-    height: 43px;
-}
 .profile{
     width: 230px;
     height : 500px;
@@ -155,34 +143,24 @@ hr{
 }
 .board-post{
     width: 100%;
-    height : 80%;
+    height : 570px;
     background-color: rgb(243, 240, 240);
     border: none;
     border-radius: 10px;
-    margin-bottom: 35px;
+    margin-bottom: 20px;
 }
 .board-text{
     display: flex;
     flex-direction: column;
+    align-items: end;
     margin-right: 20px;
     font-size: 13px;
     line-height: 0;
 }
-.board-text>.loc{
-    margin-top: 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-left: 30px;
-}
-.loc>p{
-    font-size: 16px;
-}
 .board-text-title{
     display: flex;
     flex-direction: row;
-    justify-content: end;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 .board-text-title>p{
     margin-left: 5px;
@@ -191,12 +169,10 @@ hr{
     margin: 0;
     display: flex;
     flex-direction: row;
-    justify-content: end;
 }
 .board-text-btn>button{
-    margin-left: 5px;
-    margin-top: 5px;
-    border: none;
+    margin-left: 10px;
+    margin-top: 10px;
 }
 .board-text-main>p{
     margin-top: 10px;
@@ -206,73 +182,52 @@ hr{
 /*******************************/
 
 .board-comment{
-    margin-left: 70px;
+    margin-bottom: 30px;
+    margin-left: 15px;
     margin-right: 15px;
 }
 .board-comment>input{
     width: 20%;
-    height: 30px;
+    height: 33px;
     border: 1px solid lightgray;
     margin-right:10px;
-    margin-top: 10px;
 }
 .board-comment>.comment-text{
-    width: 70%;
-    height: 44px;
+    width: 75%;
+    height: 40px;
     border: 1px solid lightgray;
     margin-right:10px;
     margin-top: 5px;
-    margin-bottom: 10px;
 }
 .board-comment>input[type=text]:focus{
     outline: none;
 }
 .board-comment>button{
-    width: 18%;
+    width: 22%;
     height: 36px;
     border-radius: 10px;
     border: none;
-    background-color: lightgray;
-    color: black;
+    background-color: rgb(54, 131, 24); 
+    color: white
+}
+.show{
+    margin-left: 14px;
+    margin-bottom: 10px;
 }
 .board-comment>button:hover{
-    background-color: rgb(54, 131, 24);
-    color: white;
-}
-
-.show{
-    background-color:  rgb(243, 240, 240);
-    border: none;
-    font-size: 15px;
-    display: flex;
-    align-items: center;
-    margin: auto;
-}
-.show>p{
-    margin-bottom: 13px;
-}
-
-.comm{
     background-color: rgb(232, 241, 232);
-    width: 70%;
-    border: 1px solid lightgray;
-    border-radius: 10px;
-    font-size: 13px;
-    margin-bottom: 20px;
+    color:black;
 }
-.rroo{
+.comm{
     display: flex;
     flex-direction: row;
-    justify-content: center;
-
+    justify-content: space-between;
+    background-color: rgb(232, 241, 232);
+    margin-bottom: 10px;
+    font-size: 13px;
 }
-.comm>p{
-    margin-left: 20px;
-}
-.rroo>button{
-    height: 20px;
-    border: none;
-
+.comm>button{
+    height: 30px;
 }
 /*******************************/
 .level{
@@ -296,42 +251,3 @@ hr{
     margin-top: 80px;
     background-color: rgb(246, 247, 249);
 }
-
-/* ProfileInfo.css */
-
-.profileInfoContainer {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap; 
-    padding: 20px;
-}
-
-.profileBox {
-    border: 1px solid gray;
-    padding: 20px;
-    width: 550px; /* width can be changed based on your preference */
-    border-radius: 10px;
-    background-color: #f0f0f0;
-}
-
-.inventoryBox {
-    border: 1px solid gray;
-    padding: 20px;
-    width: 350px; /* width can be changed based on your preference */
-    border-radius: 10px;
-    background-color: #f0f0f0;
-}
-
-.profileImage {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%; /* make profile image round */
-}
-
-/* 필요에 따라 recordsBox의 스타일도 조정할 수 있습니다. 예를 들면: */
-.recordsBox {
-    width: 45%; /* or 다른 값을 설정하여 박스의 너비를 조절 */
-    /* 추가적인 스타일링 */
-}
-
-

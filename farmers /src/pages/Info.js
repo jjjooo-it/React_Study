@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from './Header';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import './styles/Home_Farm.css';
 
@@ -11,68 +11,35 @@ function ProfileInfo() {
     const [inventory, setInventory] = useState([]);
 
     const navigate = useNavigate();
-    const location = useLocation();
-    const userInfoFromLocation = location.state || {};
-    const { userId, token } = location.state || {};
 
     useEffect(() => {
-        if (userId && token) {
-            axios.get(`/auth/profile/${userId}`, {
-                headers: {
-                    "Authorization": `Bearer ${token}`
+        // userId는 알려진 값이거나 props로 전달될 것으로 가정합니다. 필요에 따라 조정하세요.
+        const userId = 2;
+        const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjkxNTczMTUwLCJleHAiOjU0MjQwNTMxNTB9.FZimhlaTengZe-GN3433woPLkiyvGuyPoC6-d2BLROA";
+        axios.get(`/user/profile/${userId}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                if (response.data.status === 200) {
+                    setProfile({
+                        image: response.data.image || "기본_이미지_링크",
+                        nickname: response.data.nickname,
+                        location: response.data.location,
+                        phone: response.data.phone,
+                        field: response.data.field,
+                        spec: response.data.spec,
+                        license: response.data.license
+                    });
+                    setInventory(Array.isArray(response.data.items) ? response.data.items : []);
+                    setRecords(response.data.records || []);
                 }
             })
-                .then(response => {
-                    if (response.data.status === 200) {
-                        setProfile({
-                            image: response.data.image || "기본_이미지_링크",
-                            nickname: response.data.nickname,
-                            location: response.data.location,
-                            phone: response.data.phone,
-                            field: response.data.field,
-                            spec: response.data.spec,
-                            license: response.data.license
-                        });
-                        setInventory(Array.isArray(response.data.items) ? response.data.items : []);
-                        setRecords(response.data.records || []);
-                    }
-                })
-                .catch(error => {
-                    console.error("프로필 데이터를 가져오는데 오류가 발생했습니다:", error);
-                });
-        }
-    }, [userId, token]);
-
-    const deleteItem = (itemId) => {
-        axios.delete(`/item/${itemId}`, {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            // 삭제 성공 시, inventory 상태 업데이트하여 삭제된 농작물 제거
-            setInventory(inventory.filter(item => item.itemId !== itemId));
-        })
-        .catch(error => {
-            console.error("농작물 삭제 중 오류가 발생했습니다:", error);
-        });
-    }
-
-    const deleteRecord = (recordId) => {
-        axios.delete(`/record/${recordId}`, {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            // 삭제 성공 시, records 상태 업데이트하여 삭제된 거래 내역 제거
-            setRecords(records.filter(record => record.recordId !== recordId));
-        })
-        .catch(error => {
-            console.error("거래 내역 삭제 중 오류가 발생했습니다:", error);
-        });
-    }
-    
+            .catch(error => {
+                console.error("프로필 데이터를 가져오는데 오류가 발생했습니다:", error);
+            });
+    }, []); // 빈 의존성 배열을 사용하여 효과가 한 번만 실행되게 합니다.
 
     return (
         <>
@@ -87,10 +54,7 @@ function ProfileInfo() {
                     <p className='field'>{profile.field}</p>
                     <p className='crops'>{profile.spec}</p>
                     <p className='status'>{profile.license}</p>
-                    <button onClick={() => navigate('/edit-profile', {
-                        state: { userId, token }
-                    })}>수정하기</button>
-
+                    <button onClick={() => navigate('/edit-profile')}>수정하기</button>
                 </div>
 
                 {/* 인벤토리 부분은 그대로 유지하였습니다. */}
@@ -110,18 +74,18 @@ function ProfileInfo() {
                             >
                                 <button>수정하기</button>
                             </Link>
-                            <button onClick={() => deleteItem(item.itemId)}>삭제하기</button>
                         </p>
                     ))}
-                    <Link to="/add-inventory">
-                        <button>농작물 추가하기</button>
-                    </Link>
                 </div>
+
+
+
+
                 <div className='recordsBox'>
                     <h3>거래 내역</h3>
+                    <hr />
                     {records.map(record => (
                         <div className='recordItem' key={record.recordId}>
-                            <hr />
                             <p><strong>거래 ID:</strong> {record.recordId}</p>
                             <p><strong>거래 날짜:</strong> {record.createdAt}</p>
                             <p><strong>업데이트 날짜:</strong> {record.updatedAt}</p>
@@ -131,12 +95,8 @@ function ProfileInfo() {
                             <p><strong>상태:</strong> {record.status === 1 ? '활성' : '비활성'}</p>
                             <p><strong>작업:</strong> {record.work}</p>
                             <p><strong>데이터:</strong> {record.data}</p>
-                            <button onClick={() => deleteRecord(record.recordId)}>거래 내역 삭제하기</button>
                         </div>
                     ))}
-                    <button onClick={() => navigate('/add-record', {
-                        state: { userId, token }
-                    })}>거래 내역 추가하기</button>
 
                 </div>
             </div>

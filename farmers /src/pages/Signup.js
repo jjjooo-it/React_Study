@@ -25,27 +25,27 @@ function Signup() {
     };
 
     try {
-      // 가짜 회원가입 응답 데이터
-      const response = {
-        status: 201,
-        code: "A000",
-        message: "회원가입 성공"
-      };
+      const response = await fetch('/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
 
-      if (response.status === 201) {
-        console.log('Signup response:', response);
-        alert("회원가입 성공!");
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Signup response:', data);
         navigate('/login');
       } else {
-        setError(response.message || '회원가입에 실패했습니다.');
-        alert(response.message || '회원가입에 실패했습니다.');
+        const data = await response.json();
+        setError(data.message || '회원가입에 실패했습니다.');
       }
     } catch (error) {
       setError('오류가 발생했습니다. 나중에 다시 시도해주세요.');
-      alert('오류가 발생했습니다. 나중에 다시 시도해주세요.');
     }
   };
-  
+
   return (
     <div className="Signup">
       <Header />
@@ -107,6 +107,7 @@ function Signup() {
               type="submit"
               value="가입하기"
               className="signupBTNN"
+              
             />
           </form>
         </div>

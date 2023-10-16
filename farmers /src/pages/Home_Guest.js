@@ -2,21 +2,18 @@ import './styles/Home_Guest.css';
 import Header from './Header_gs';
 import { useState,useEffect} from 'react';
 import {BiEdit} from 'react-icons/bi';
-import {AiFillEdit}from 'react-icons/ai';
-import {RiDeleteBin6Fill} from 'react-icons/ri';
-import {FaLocationDot} from 'react-icons/fa6';
-import {useNavigate,useLocation} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
-import chat from './img/chat.png';
 
 
 //1. 프로필 (완료)
 function Guest_HomeProfile(){
     const navigate = useNavigate();
     return(
-        <div className='profile-gs'>
+        <div className='profile'>
            <h4>게스트님 어서오세요!</h4>
            <hr></hr>
+           <br/>
            <br/>
            <button onClick={()=> navigate('/signup')}>회원가입하기</button>
            <button onClick={()=>{navigate('/login')}}>로그인하기</button>
@@ -32,7 +29,7 @@ function Guest_Board_Post(){
      const getAllPost = async () => {
          try {
              const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjkxNTczMTUwLCJleHAiOjU0MjQwNTMxNTB9.FZimhlaTengZe-GN3433woPLkiyvGuyPoC6-d2BLROA";
-             const response = await axios.get('/auth/post', {
+             const response = await axios.get('/post', {
                  headers: {
                      "Authorization": `Bearer ${token}`,
                      "Content-Type": "application/json"
@@ -48,9 +45,8 @@ function Guest_Board_Post(){
      useEffect(() => {
         getAllPost();
     }, []);
-    
+
     /////////////////////////////////////////////
-   
     const [showCommentID, setShowCommentID]= useState(1);
   
     const clickshowBtn =  id =>{ //댓글보기
@@ -62,32 +58,26 @@ function Guest_Board_Post(){
     return(
         <>
             <div className='board-total'>
-               <p>농부님들의 이야기를 확인하세요!</p>
+               <p>농부님들의 글을 확인하세요!</p>
             {/*전체 글 보여주기*/}
             {postList.map((a,i)=> (
                 <div key={i}>
                 <div className='board-post'>
                    <div className='board-text'>
-                    <div className='loc'>
-                         <FaLocationDot style={{ width: "16px", height: "16px",color: "red" }}/>
-                          <p style={{fontWeight :"bold"}}>{a.location}</p>
-                    </div>
-                       <div className='board-text-title'>
-                          <p>작성: {a.createdAt} | </p>
-                          <p>수정: {a.updatedAt}</p>
+                       <p>{a.location}</p>
+                       <p>작성: {a.createdAt}</p>
+                       <p>수정: {a.updatedAt}</p>
+                       <div className='board-text-btn'>
+                           <button onClick={() => clickshowBtn(a.postId)}>댓글보기</button>
                        </div>
                     </div>
                     <div className='board-text-main' key={i}>
-                        <img src={a.image} style={{ width: "650px", height: "270px", marginTop:"20px"}}/>
-                        <p style={{fontSize:"18px"}}>{a.description}</p> 
+                        <img src={a.image} style={{ width: "650px", height: "230px"}}/>
+                        <p>{a.description}</p> 
                     </div>
-                    <hr style={{width: "500px",borderTop:"1px dashed #bbb",marginBottom:"5px"}}></hr>
-                    <button className="show"onClick={() => clickshowBtn(a.postId)}>
-                        <img style={{width:"18px", height:"18px"}}src={chat}></img>&nbsp;&nbsp;
-                        <p>댓글</p></button>
-                    {showTF && showCommentID === a.postId ? <><Post_Comment postId={a.postId}/> <Show_Comment postId={a.postId}/></> : null}
                 </div>
-                
+                <Post_Comment postId={a.postId}/>
+                {showTF && showCommentID === a.postId ?  <Guest_Show_Comment postId={a.postId}/> : null}
                 </div>
             ))}
             </div>
@@ -134,7 +124,6 @@ function Post_Comment(props){
               setPostCommentData({ ...postCommentData, password: e.target.value });
             }}
           />
-          <br/>
           <input
             className='comment-text'
             type='text'
@@ -156,7 +145,7 @@ function Post_Comment(props){
 }       
 
 //3. 댓글 (2)댓글 보여주기
-function Show_Comment(props){ 
+function Guest_Show_Comment(props){ 
     const [commentList, setCommentList] = useState([]);
 useEffect(()=>{
     const getComment = async () => {
@@ -205,33 +194,30 @@ useEffect(()=>{
     //////////////////////////////////////
     return (
         <> 
-        {commentList.length>0?
-        <p style={{marginLeft:"85px",fontSize:"14px"}}>댓글({commentList.length})</p>:null}
-        {
+        {commentList.length > 0 ? (
         commentList.map((a, i) => (
-            <div className='rroo'key={i}>
-          <div className='comm' >
-            <p style={{fontWeight:"bold"}}>{a.nickname}</p>
+          <div className='comm' key={i}>
+            <p>{a.nickname}</p>
             <p>{a.content}</p>
+            <button onClick={() => deleteComment(a.commentId)}>삭제하기</button>
           </div>
-           <button onClick={() => deleteComment(a.commentId)}>❌</button>
-           </div>
-        ))}
+        ))
+      ) : (
+        <p>댓글이 없습니다.</p>
+      )}
     </>
       );   
 }        
-        
                          
 function Guest_Tier(){
     return(
-        <div className='level-gs'>
-            <hr style={{marginTop:"40px"}}/>
-            <p>멋쟁이 농부처럼을 통해<br/>믿을 수 있는 농부님들에게<br/>농작물을 값싸게 구매하세요!</p>
-            <hr/>
+        <div className='level'>
+            <p>멋쟁이 농부처럼을 통해</p>
+            <p>믿을 수 있는 농부님에게 </p>
+            <p>농작물을 값싸게 구매하세요!</p>
         </div>
     )
 }
-
 
 function HomeGuest(){
     return (

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from './Header';
 import Button from 'react-bootstrap/Button';
@@ -14,20 +14,32 @@ function EditProfile() {
         license: ""
     });
 
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState(null); // 이미지를 위한 별도의 상태
+
     const navigate = useNavigate();
-    const location = useLocation();
-    const { userId, token } = location.state || {};
 
     useEffect(() => {
+        const decodeToken = (token) => {
+            try {
+                const payload = token.split('.')[1];
+                const decoded = JSON.parse(atob(payload));
+                return decoded.sub; // 'sub' claim을 반환합니다.
+            } catch (error) {
+                console.error("토큰을 디코드하는데 오류가 발생했습니다:", error);
+                return null;
+            }
+        };
+    
         const fetchProfileData = async () => {
             try {
-                if (!userId || !token) {
-                    console.error("userId 또는 token이 전달되지 않았습니다.");
+                const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjkxNTczMTUwLCJleHAiOjU0MjQwNTMxNTB9.FZimhlaTengZe-GN3433woPLkiyvGuyPoC6-d2BLROA";
+                const userId = decodeToken(token); // 토큰에서 userId를 추출합니다.
+    
+                if (!userId) {
+                    console.error("토큰에서 userId를 추출할 수 없습니다.");
                     return;
                 }
-                
-                const response = await axios.get(`/auth/profile/${userId}`, {
+                const response = await axios.get(`/user/profile/${userId}`, {
                     headers: {
                         "Authorization": `Bearer ${token}`,
                     }
@@ -50,17 +62,19 @@ function EditProfile() {
         };
     
         fetchProfileData();
-    }, [userId, token]);
+    }, []);
+    
 
     const handleInputChange = (e) => {
         setProfile({
             ...profile,
             [e.target.name]: e.target.value
         });
-    };
+    }
 
     const handleUpdateProfile = async () => {
         try {
+            const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjkxNTczMTUwLCJleHAiOjU0MjQwNTMxNTB9.FZimhlaTengZe-GN3433woPLkiyvGuyPoC6-d2BLROA";
             const response = await axios.patch('/user/update',
                 profile,
                 {
@@ -72,7 +86,6 @@ function EditProfile() {
             if (image) {
                 await handleUploadFile();
             }
-            
             alert("프로필 업데이트 성공!");
             navigate(-1);
         } catch (error) {
@@ -83,6 +96,7 @@ function EditProfile() {
 
     const handleUploadFile = async () => {
         try {
+            const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjkxNTczMTUwLCJleHAiOjU0MjQwNTMxNTB9.FZimhlaTengZe-GN3433woPLkiyvGuyPoC6-d2BLROA";
             const formData = new FormData();
             formData.append("file", image);
 
@@ -108,6 +122,7 @@ function EditProfile() {
             <Header />
             <div className='profileInfoContainer'>
                 <div className='create-post-form'>
+                    {/* 이미지 렌더링 부분 수정 */}
                     <img src={typeof image === "string" ? image : (image ? URL.createObjectURL(image) : undefined)} alt="프로필 사진 미리보기" style={{ width: '100px', height: '100px' }} /><br />
                     <label>
                         프로필 사진:&nbsp;
@@ -143,5 +158,6 @@ function EditProfile() {
         </div>
     );
 }
+
 
 export default EditProfile;

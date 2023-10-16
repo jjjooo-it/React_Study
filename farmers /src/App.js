@@ -14,17 +14,9 @@ import Card from './pages/Card';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Editwrite from './pages/Editwrite';
-import AddRecord from './pages/AddRecord';
-import AddInventory from './pages/AddInventory';
-import Brand from './pages/Brand';
-import { AuthProvider } from './AuthContext';
-import Team from './pages/Team';
-import ApplyTeam from './pages/ApplyTeam';
-import AddFarmer from './pages/AddFarmer';
 
 function App() {
   return (
-    <AuthProvider>
     <Routes>
     <Route path="/" element = {<FirstPage/>} />
     <Route path="/farm" element = {<FarmPage/>} />
@@ -41,14 +33,8 @@ function App() {
     <Route path='/login' element={<Login/>}/>
     <Route path='/signup' element={<Signup/>}/>
     <Route path='/edit-write' element={<Editwrite/>}/>
-    <Route path='/add-inventory' element={<AddInventory/>}/>
-    <Route path="/add-record" element={<AddRecord />} />
-    <Route path='/brand'element={<Brand/>} />
-    <Route path='/team' element={<Team/>}/>
-    <Route path='/applyteam' element={<ApplyTeam/>}/>
-    <Route path='/addfarmer' element={<AddFarmer/>}/>
-    </Routes>
-    </AuthProvider>
+
+    </Routes>    
   )
 }
 

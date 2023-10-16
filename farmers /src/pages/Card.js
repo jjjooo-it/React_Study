@@ -6,20 +6,20 @@ import img3 from './img/locloc.png';
 import img4 from './img/ring.png';
 import img5 from './img/picpic.png';
 import { useLocation } from 'react-router-dom';
-import { useAuth } from './../AuthContext';
 
 function Card() {
   const location = useLocation();
+  const userInfoFromLocation = location.state || {}; // location.state가 없을 때를 위해 빈 객체로 초기화
 
-  const { auth } = useAuth(); // AuthContext에서 auth 상태를 가져옵니다.
-  const { userId, token } = auth; // userId와 token을 분해할당합니다.
+  const userId = userInfoFromLocation.userId;
+  const token = userInfoFromLocation.token;
 
   const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await fetch(`/auth/profile/${userId}`, {
+        const response = await fetch(`/user/profile/${userId}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`
@@ -56,11 +56,7 @@ function Boyd({ userInfo }) {
     <div className='containerCard'>
       <div className='card'>
         <div className='cardName'>
-        {userInfo.image ? (
-              <img className="userImg" alt="iconImg" src={userInfo.image} />
-            ) : (
-              <img className="userImg" alt="iconImg" src={img4} />
-            )}
+          <div className='imgCon'><img className ="userImg" alt="iconImg" src={userInfo.image} /></div>
           <div>
             <div className='name'>{userInfo.name}[{userInfo.nickname}]</div>
             <div className='num'>{userInfo.phone}</div>

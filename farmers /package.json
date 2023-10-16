@@ -2,7 +2,7 @@
   "name": "farmers",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://3.38.95.92:8080/",
+  "proxy": "http://3.39.3.54:8080",
   "dependencies": {
     "@emotion/css": "^11.11.2",
     "@testing-library/jest-dom": "^5.17.0",

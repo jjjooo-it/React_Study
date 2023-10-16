@@ -2,10 +2,9 @@ import { useState } from 'react';
 import axios from 'axios';
 import Header from './Header';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from './../AuthContext';
 import './styles/write.css';
 
-function CreatePost(props) {
+function CreatePost() {
     const [post, setPost] = useState({
         location: "",
         description: "",
@@ -21,46 +20,50 @@ function CreatePost(props) {
         });
     }
 
-    const { auth } = useAuth(); // AuthContext에서 auth 상태를 가져옵니다.
-    const { userId, token } = auth; // userId와 token을 분해할당합니다.
-
     const handleFormSubmit = async () => {
         try {
-            // 새 FormData 인스턴스 생성
-            const formData = new FormData();
-
-            // 내용을 FormData에 첨부
-            formData.append('location', post.location);
-            formData.append('description', post.description);
-
-            // 이미지 첨부
-            if (image) {
-                formData.append('file', image);
-            }
-
+            const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjkxNTczMTUwLCJleHAiOjU0MjQwNTMxNTB9.FZimhlaTengZe-GN3433woPLkiyvGuyPoC6-d2BLROA"; // 실제 토큰으로 교체
+    
             // 포스트 데이터를 보내기 위한 Axios 요청
-            const postResponse = await axios.post('/post/save', formData, {
+            const postResponse = await axios.post('/post/save', post, {
                 headers: {
                     "Authorization": `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data"
+                    "Content-Type": "application/json"
                 },
             });
-
+    
             console.log(postResponse);
             alert("글이 성공적으로 생성되었습니다!");
-
-            // 게시글 작성 후 프로필 정보를 업데이트한 다음 이전 페이지로 돌아갑니다.
-            if (props.onProfileUpdate) {
-                props.onProfileUpdate();
+    
+            let imageRequest = null;
+            if (image) {    
+                // 새 FormData 인스턴스 생성
+                const formData = new FormData();
+    
+                // 파일을 FormData에 첨부
+                formData.append('file', image);
+    
+                // 파일을 보내기 위한 Axios 요청
+                imageRequest = await axios.post('/post/save', formData, {
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "multipart/form-data"
+                    },
+                });
+    
+                console.log(imageRequest);
+                alert("이미지가 성공적으로 첨부되었습니다!");
             }
-
+    
             navigate(-1);
-
+    
         } catch (error) {
             console.error(error);
             alert(`실패: ${error.response ? error.response.data.message : "알 수 없는 오류"}`);
         }
     }
+    
+
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];

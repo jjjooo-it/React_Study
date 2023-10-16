@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from './Header';
-import { useAuth } from './../AuthContext';
 
 function EditInventoryItem() {
     const location = useLocation();
@@ -18,11 +17,9 @@ function EditInventoryItem() {
         gram: gram || ''
     });
 
-    const { auth } = useAuth(); // AuthContext에서 auth 상태를 가져옵니다.
-    const { userId, token } = auth; // userId와 token을 분해할당합니다.
-
     const handleUpdate = () => {
-        
+        const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjkxNTczMTUwLCJleHAiOjU0MjQwNTMxNTB9.FZimhlaTengZe-GN3433woPLkiyvGuyPoC6-d2BLROA";
+
         axios.patch(`/item/${itemId}`, item, {
             headers: {
                 "Authorization": `Bearer ${token}`,
