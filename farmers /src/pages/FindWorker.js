@@ -35,60 +35,18 @@ function FindWorker_Main() {
     
     fetchWorkerList();
   }, []);
-  const get_auth_job = {
-    "status": 200,
-    "code": "N001",
-    "message": "JOB 불러오기 성공",
-    "jobList": [
-    {
-    "createdAt": "2023-08-17 18:58:06",
-    "updatedAt": "2023-08-17 18:58:06",
-    "status": 1,
-    "jobId": 3,
-    "name": "박농부",
-    "age": 24,
-    "foreigner": false,
-    "koreanLanguage": true,
-    "document": null,
-    "contact": "010-1111-2222"
-    },
-    {
-    "createdAt": "2023-08-17 18:14:06",
-    "updatedAt": "2023-08-17 18:14:06",
-    "status": 1,
-    "jobId": 2,
-    "name": "김일꾼",
-    "age": 24,
-    "foreigner": false,
-    "koreanLanguage": true,
-    "document": null,
-    "contact": "010-3333-4444"
-    },
-    {
-    "createdAt": "2023-08-17 18:13:47",
-    "updatedAt": "2023-08-17 18:13:47",
-    "status": 1,
-    "jobId": 1,
-    "name": "제임스",
-    "age": 24,
-    "foreigner": true,
-    "koreanLanguage": true,
-    "document": "https://firebasestorage.googleapis.com/v0/b/applepie-f030c.appspot.com/o/스크린샷 2023-08-07 174218-documentnull.png?alt=media",
-    "contact": "010-1234-5678"
-    }
-    ]
-    }
   
   return (
     <>
       <Slider {...settings}>
-        {get_auth_job.jobList.map((a, i) => (
+        {workerList.map((worker, i) => (
           <div className='findworker-text' key={i}>
+            <img src={workerImg} alt={`Worker ${i}`} />
             <div className='findworker-col'>
-              <h4>{a.name}</h4>
-              <p>{"한국어 불가"}</p>
-              <p>{a.contact}</p>
-              <p> "재외국민 등록증 인증 완료" </p>
+              <h4>{worker.name}</h4>
+              <p>{worker.koreanLanguage ? "한국어 가능" : "한국어 불가"}</p>
+              <p>{worker.contact}</p>
+              <p className='s2'>{worker.document ? "재외국민 등록증 인증 완료" : "재외국민 등록증 확인 필요"}</p>
             </div>
           </div>
         ))}

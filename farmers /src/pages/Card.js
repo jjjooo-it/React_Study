@@ -19,50 +19,16 @@ function Card() {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        // 실제 fetch 대신 고정된 정보를 사용합니다.
-        const response = {
-          status: 200,
-          code: "C000",
-          message: "회원정보 있음",
-          userId: 2,
-          name: "김농부",
-          nickname: "사과농부꾼",
-          location: "분당",
-          phone: "01075214992",
-          field: "1000",
-          spec: "40년차",
-          license: "자격증",
-          tier: 1,
-          description: "프로필 사진 올리기",
-          image: null,
-          item: "사과",
-          items: [
-            {
-              createdAt: "2023-08-10 01:23:31",
-              updatedAt: "2023-08-10 01:23:31",
-              status: 1,
-              itemId: 1,
-              title: "사과",
-              gram: 1000
-            }
-          ],
-          records: [
-            {
-              createdAt: "2023-08-10 01:23:02",
-              updatedAt: "2023-08-10 01:23:02",
-              status: 1,
-              recordId: 1,
-              who: "x회사",
-              what: "사과",
-              size: "1",
-              work: "준비중",
-              date: "2023-08-01"
-            }
-          ]
-        };
+        const response = await fetch(`/auth/profile/${userId}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
 
-        if (response.status === 200) {
-          setUserInfo(response);
+        if (response.ok) {
+          const data = await response.json();
+          setUserInfo(data);
         } else {
           // Handle error
         }
@@ -71,7 +37,7 @@ function Card() {
       }
     };
 
-    if (userId && token) {
+    if (userId && token) { // userId와 token이 유효한 경우에만 fetchUserInfo 실행
       fetchUserInfo();
     }
   }, [userId, token]);
@@ -86,16 +52,15 @@ function Card() {
 }
 
 function Boyd({ userInfo }) {
-  
   return (
     <div className='containerCard'>
       <div className='card'>
         <div className='cardName'>
-          {userInfo.image ? (
-            <img className="userImg" alt="iconImg" src={userInfo.image} />
-          ) : (
-            <img className="userImg" alt="iconImg" src={img4} />
-          )}
+        {userInfo.image ? (
+              <img className="userImg" alt="iconImg" src={userInfo.image} />
+            ) : (
+              <img className="userImg" alt="iconImg" src={img4} />
+            )}
           <div>
             <div className='name'>{userInfo.name}[{userInfo.nickname}]</div>
             <div className='num'>{userInfo.phone}</div>

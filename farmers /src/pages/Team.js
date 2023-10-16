@@ -3,7 +3,8 @@ import './styles/Team.css';
 import Header from './Header';
 import { useAuth } from './../AuthContext';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+
 
 function HomeProfile() {
     const { auth } = useAuth();
@@ -51,38 +52,10 @@ function HomeProfile() {
 }
 
 function Board_Post() {
-    const [brandList, setBrandList] = useState([
-        {
-            brandId: 1,
-            name: "브랜드 1",
-            introduce: "브랜드 1 소개글입니다.",
-        },
-        {
-            brandId: 2,
-            name: "브랜드 2",
-            introduce: "브랜드 2 소개글입니다.",
-        },
-        {
-            brandId: 3,
-            name: "브랜드 3",
-            introduce: "브랜드 3 소개글입니다.",
-        },
-        {
-            brandId: 4,
-            name: "브랜드 4",
-            introduce: "브랜드 4 소개글입니다.",
-        },
-        {
-            brandId: 5,
-            name: "브랜드 5",
-            introduce: "브랜드 5 소개글입니다.",
-        },
-    ]);
-    
+    const [brandList, setBrandList] = useState([]);
     const { auth } = useAuth();
     const { token } = auth;
-    const navigate = useNavigate();
-
+        const navigate = useNavigate();
     useEffect(() => {
         const fetchBrands = async () => {
             try {
@@ -95,7 +68,6 @@ function Board_Post() {
                 console.log(response.data);
                 if (response.data.status === 200) {
                     setBrandList(response.data.brands);
-                    console.log(response.data.brands);
                 }
             } catch (error) {
                 console.log(error);
@@ -104,6 +76,7 @@ function Board_Post() {
         fetchBrands();
     }, [token]);
 
+
     return (
         <div className='board-total'>
             <h3 className='orgName'>LikeFarmer Organizations</h3>
@@ -111,7 +84,7 @@ function Board_Post() {
                 {brandList.map(brand => (
                     <li
                         key={brand.brandId}
-                        onClick={() => navigate('/brand', { state: { brandId: brand.brandId } })}
+                        onClick={() => navigate('/brand',{state:{brandId : brand.brandId}})}
                         className='brand-item'
                     >
                         <strong>{brand.name}</strong>
@@ -122,6 +95,10 @@ function Board_Post() {
         </div>
     );
 }
+
+// ... (나머지 컴포넌트 및 코드) ...
+
+
 
 function Tier() {
     const { auth } = useAuth();
